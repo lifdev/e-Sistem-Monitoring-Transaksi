@@ -40,13 +40,13 @@ Route::middleware('checkLogin')->group(function(){
     // User Create
     Route::get('user/create', [UserController::class, 'create'])->name('userCreate');
 
-    // Store Data
+    // Store Data User
     Route::post('user/store', [UserController::class, 'store'])->name('userStore');
 
     // User Edit
     Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('userEdit');
 
-    // User Update/Edit
+    // User Update
     Route::post('user/update/{id}', [UserController::class, 'update'])->name('userUpdate');
     
     // User Hapus Destroy
@@ -55,12 +55,32 @@ Route::middleware('checkLogin')->group(function(){
     // Minusan
     Route::get('minusan', [MinusanController::class, 'index'])->name('minusan');
 
-    // Excel
+    // User Excel
     Route::get('user/excel', [UserController::class, 'excel'])->name('userExcel');
 
-    // PDF
+    // User PDF
     Route::get('user/pdf', [UserController::class, 'pdf'])->name('userPdf');
-    
+
+    // Create Minusan
+    Route::get('minusan/create', [MinusanController::class, 'create'])->name('minusanCreate');
+
+    // Store Data Minusan
+    Route::post('minusan/store', [MinusanController::class, 'store'])->name('minusanStore');
+
+    // Minusan Edit
+    Route::get('minusan/edit{id}', [MinusanController::class, 'edit'])->name('minusanEdit');
+
+    // Minusan Update
+    Route::post('minusan/update{id}', [MinusanController::class, 'update'])->name('minusanUpdate');
+
+    // Minusan Hapus Destroy
+    Route::delete('minusan/destroy{id}', [MinusanController::class, 'destroy'])->name('minusanDestroy');
+
+    // Minusan Excel
+    Route::get('minusan/excel', [MinusanController::class, 'excel'])->name('minusanExcel');
+
+    // Minusan PDF
+    Route::get('minusan/pdf', [MinusanController::class, 'pdf'])->name('minusanPdf');
 });
 
 

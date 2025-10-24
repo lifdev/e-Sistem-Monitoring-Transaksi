@@ -21,7 +21,7 @@
                 </li>
 
                 <!-- Nav Item - Data Minusan -->
-                <li class="nav-item {{ $menuMinusan ?? '' }}">
+                <li class="nav-item {{ $menuAdminMinusan ?? '' }}">
                     <a class="nav-link" href="{{ route('minusan') }}">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Data Minusan</span></a>

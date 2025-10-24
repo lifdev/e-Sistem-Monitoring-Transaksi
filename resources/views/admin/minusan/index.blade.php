@@ -6,14 +6,14 @@
     <div class="card">
         <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
             <div class="mb-1 mr-2">
-                <a href="#" class="btn btn-sm btn-primary">
+                <a href="{{ route('minusanCreate') }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus mr-2"></i>Tambah Data</a>
             </div>
             <div>
-                <a href="#" class="btn btn-sm btn-success">
+                <a href="{{ route('minusanExcel')}}" class="btn btn-sm btn-success">
                     <i class="fas fa-file-excel mr-2"></i>Excel</a>
 
-                <a href="#" class="btn btn-sm btn-danger">
+                <a href="{{ route('minusanPdf')}}" class="btn btn-sm btn-danger" target='__blank'>
                     <i class="fas fa-file-pdf mr-2"></i>PDF</a>
             </div>
         </div>
@@ -48,18 +48,19 @@
                                 <td>{{ $item->spl }}</td>
                                 <td>{{ $item->produk }}</td>
                                 <td>{{ $item->nomor }}</td>
-                                <td>{{ $item->total }}</td>
+                                <td>{{ number_format($item->total, 0, ',', '.') }}</td>
                                 <td>{{ $item->qty }}</td>
-                                <td>{{ $item->total_per_org }}</td>
+                                <td>{{ number_format($item->total_per_orang * $item->qty, 0, ',', '.') }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
-                                    <a href="{{ route('userEdit', $item->id) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('minusanEdit', $item->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                        data-target="#exampleModal{{ $item->id }}">
+                                        data-target="#modalMinusanDestroy{{ $item->id }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
+                                    @include('admin/minusan/modal', ['item' => $item])
                                 </td>
                             </tr>
                         @endforeach

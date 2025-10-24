@@ -88,7 +88,7 @@
             </div>
 
             <div class="form-group mt-3">
-                <button type="submit" class="btn btn-sm btn-warning">
+                <button type="submit" class="btn btn-sm btn-primary">
                     <i class="fas fa-edit mr-1"></i> Edit
                 </button>
             </div>

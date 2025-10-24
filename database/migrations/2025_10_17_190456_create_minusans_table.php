@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('minusans', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unsigned();
             $table->date('tanggal');
-            $table->string('server');
-            $table->string('nama');
-            $table->string('spl');
-            $table->string('produk');
-            $table->string('nomor');
-            $table->decimal('total');
+            $table->enum('server', ['CMP', 'CCN', 'CWN']);
+            $table->string('nama', 255);
+            $table->enum('spl', ['IFG7', 'CCN', 'HB51']);
+            $table->enum('produk', ['IFG77', 'DV09', 'MCE12']);
+            $table->integer('nomor');
+            $table->decimal('total', 8, 2);
             $table->integer('qty');
-            $table->decimal('total_per_org');
-            $table->text('keterangan');
+            $table->decimal('total_per_org', 8, 2);
+            $table->enum('keterangan', ['Dialihkan', 'Digagalkan']);
             $table->timestamps();
         });
 
