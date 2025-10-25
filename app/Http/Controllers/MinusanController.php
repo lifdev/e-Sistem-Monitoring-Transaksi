@@ -7,18 +7,32 @@ use App\Models\Minusan;
 use App\Exports\MinusanExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class MinusanController extends Controller
 {
     public function index()
     {
-        $data = array(
+        $user =Auth::user();
+        
+        if ($user->jabatan=='Admin'){
+
+            $data = array(
             'title'                      => 'Data Minusan',
             'menuAdminMinusan'           => 'active',
             'minusan'                    => Minusan::get(),
 
-        );
-        return view('admin/minusan/index', $data);
+            );
+            return view('admin/minusan/index', $data);
+        }else{
+            $data = array(
+            'title'                      => 'Data Minusan',
+            'menuAdminMinusan'           => 'active',
+            'minusan'                    => Minusan::get(),
+
+            );
+            return view('staff/minusan/index', $data);
+        }
     }
 
     public function create(){

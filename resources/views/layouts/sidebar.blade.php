@@ -10,7 +10,7 @@
                     <div class="sidebar-brand-text mx-3">E-SMT</div>
                 </a>
 
-                <!-- Divider -->
+                   <!-- Divider -->
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Dashboard -->
@@ -19,20 +19,7 @@
                         <i class="fas fa-th-large"></i>
                         <span>Dashboard</span></a>
                 </li>
-
-                <!-- Nav Item - Data Minusan -->
-                <li class="nav-item {{ $menuAdminMinusan ?? '' }}">
-                    <a class="nav-link" href="{{ route('minusan') }}">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Data Minusan</span></a>
-                </li>
-
-                <!-- Nav Item - Rekap Bulanan -->
-                <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Rekap Bulanan</span></a>
-                </li>
+                
 
                 <!-- Nav Item - Export
                 <li class="nav-item">
@@ -41,12 +28,37 @@
                         <span>Export</span></a>
                 </li> -->
 
+                @if (auth()->user()->jabatan=='Admin')
+
+                <!-- Nav Item - Data Minusan -->
+                <li class="nav-item {{ $menuAdminMinusan ?? '' }}">
+                    <a class="nav-link" href="{{ route('minusan') }}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Data Minusan</span></a>
+                </li>
+
+                 <!-- Nav Item - Rekap Bulanan -->
+                <li class="nav-item">
+                    <a class="nav-link" href="tables.html">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Rekap Bulanan</span></a>
+                </li>
+
                 <!-- Nav Item - User -->
                 <li class="nav-item {{ $menuAdminUser ?? '' }}">
                     <a class="nav-link" href="{{ route('user') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span>User</span></a>
                 </li>
+                @else
+                    <li class="nav-item {{ $menuAdminMinusan ?? '' }}">
+                    <a class="nav-link" href="{{ route('minusan') }}">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Data Minusan</span></a>
+                </li>
+                @endif
+
+                
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

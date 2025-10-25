@@ -13,7 +13,7 @@
                 <a href="{{ route('minusanExcel')}}" class="btn btn-sm btn-success">
                     <i class="fas fa-file-excel mr-2"></i>Excel</a>
 
-                <a href="{{ route('minusanPdf')}}" class="btn btn-sm btn-danger" target='__blank'>
+                <a href="{{ route('minusanPdf')}}" class="btn btn-sm btn-danger" target="_blank">
                     <i class="fas fa-file-pdf mr-2"></i>PDF</a>
             </div>
         </div>

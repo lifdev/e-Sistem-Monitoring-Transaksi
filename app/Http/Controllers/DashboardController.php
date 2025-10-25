@@ -12,7 +12,7 @@ class DashboardController extends Controller
         $data = array(
             "title"                 => 'Dashboard',
             "menuDashboard"         => 'active',
-            "minusan"               => Minusan::latest()->take(2)->get(),
+            "minusan"               => Minusan::latest()->take(5)->get(),
             "totalUser"             => User::count(),
             "totalMinusan"          => Minusan::selectRaw('SUM(qty * total_per_orang) as total')->value('total'),
             "totalTransaksi"        => Minusan::count(),
