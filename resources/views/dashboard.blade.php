@@ -1,7 +1,9 @@
-@extends('layouts/app') 
+@extends('layouts/app')
 
 @section('content')
+
     <!-- Page Heading -->
+
     <h1 class="h3 mb-4 text-gray-800">{{ $title }}</h1>
 
     <div class="row">
@@ -64,22 +66,22 @@
         </div>
     </div>
 
-<!-- Table Minusan-->
+    <!-- Chart Area -->
 
-    <div class="card">
-        <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
-            <div class="mb-1 mr-2">
-                <a href="{{ route('minusanCreate') }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus mr-2"></i>Tambah Data</a>
-            </div>
-            <div>
-                <a href="{{ route('minusanExcel')}}" class="btn btn-sm btn-success">
-                    <i class="fas fa-file-excel mr-2"></i>Excel</a>
-
-                <a href="{{ route('minusanPdf')}}" class="btn btn-sm btn-danger" target="_blank">
-                    <i class="fas fa-file-pdf mr-2"></i>PDF</a>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Grafik Total Minusan Per Bulan</h6>
+        </div>
+        <div class="card-body">
+            <div class="chart-area">
+                <canvas id="chartMinusan"></canvas>
             </div>
         </div>
+    </div>
+
+    <!-- Table Minusan-->
+
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -113,7 +115,7 @@
                                 <td>{{ $item->nomor }}</td>
                                 <td>{{ number_format($item->total, 0, ',', '.') }}</td>
                                 <td>{{ $item->qty }}</td>
-                                <td>{{ number_format($item->total_per_orang * $item->qty, 0, ',', '.') }}</td>
+                                <td>{{ number_format($item->total_per_orang, 0, ',', '.') }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <a href="{{ route('minusanEdit', $item->id) }}" class="btn btn-sm btn-warning">
@@ -133,4 +135,61 @@
         </div>
     </div>
 
+    <!--Area Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("/chart/minusan")
+                .then(res => res.json())
+                .then(data => {
+                    const labels = data.map(item => item.bulan);
+                    const totals = data.map(item => item.total_bulanan);
+
+                    const ctx = document.getElementById("chartMinusan").getContext("2d");
+                    new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: "Total Minusan (Rp)",
+                                data: totals,
+                                backgroundColor: "rgba(78, 115, 223, 0.1)",
+                                borderColor: "rgba(78, 115, 223, 1)",
+                                borderWidth: 2,
+                                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                                pointRadius: 3,
+                                tension: 0.3
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return "Rp " + context.formattedValue.replace(
+                                                /\B(?=(\d{3})+(?!\d))/g, ".");
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return "Rp " + value.toLocaleString("id-ID");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.error("Gagal ambil data:", err));
+        });
+    </script>
 @endsection

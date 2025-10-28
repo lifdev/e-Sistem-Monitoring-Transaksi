@@ -37,7 +37,7 @@
                     <div class="col-6">: {{ $item->qty }}</div>
 
                     <div class="col-6">Total/Org</div>
-                    <div class="col-6">: {{ number_format($item->total_per_orang * $item->qty, 0, ',', '.') }}</div>
+                    <div class="col-6">: {{ number_format($item->total_per_orang, 0, ',', '.') }}</div>
 
                     <div class="col-6">Keterangan</div>
                     <div class="col-6">: {{ $item->keterangan }}</div>

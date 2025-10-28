@@ -10,10 +10,10 @@
                     <i class="fas fa-plus mr-2"></i>Tambah Data</a>
             </div>
             <div>
-                <a href="{{ route('minusanExcel')}}" class="btn btn-sm btn-success">
+                <a href="{{ route('minusanExcel') }}" class="btn btn-sm btn-success">
                     <i class="fas fa-file-excel mr-2"></i>Excel</a>
 
-                <a href="{{ route('minusanPdf')}}" class="btn btn-sm btn-danger" target="_blank">
+                <a href="{{ route('minusanPdf') }}" class="btn btn-sm btn-danger" target="_blank">
                     <i class="fas fa-file-pdf mr-2"></i>PDF</a>
             </div>
         </div>
@@ -50,7 +50,7 @@
                                 <td>{{ $item->nomor }}</td>
                                 <td>{{ number_format($item->total, 0, ',', '.') }}</td>
                                 <td>{{ $item->qty }}</td>
-                                <td>{{ number_format($item->total_per_orang * $item->qty, 0, ',', '.') }}</td>
+                                <td>{{ number_format($item->total_per_orang, 0, ',', '.') }}</td> 
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <a href="{{ route('minusanEdit', $item->id) }}" class="btn btn-sm btn-warning">

@@ -105,12 +105,12 @@ class UserController extends Controller
     }
 
     public function excel(){
-        $filename = now()->format('d-m-Y_H.i.s');
+        $filename = now()->format('d-m-Y');
         return Excel::download(new UserExport, 'DataUser_'.$filename.'.xlsx');
     }
 
     public function pdf(){
-        $filename = now()->format('d-m-Y_H.i.s');
+        $filename = now()->format('d-m-Y');
         $data = array(
             'user' => User::get(),
         );

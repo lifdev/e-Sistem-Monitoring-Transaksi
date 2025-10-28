@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MinusanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +21,7 @@ use App\Http\Controllers\MinusanController;
 //     return view('welcome');
 // });
 
+// Middleware isLogin
 Route::middleware('isLogin')->group(function(){
     // Login
     Route::redirect('/', '/login');
@@ -32,6 +34,9 @@ Route::middleware('isLogin')->group(function(){
 // Logout
 Route::get('logout',[AuthController::class, 'logout'])->name('logout');
 
+// Route Area Chart
+Route::get('/chart/minusan', [MinusanController::class, 'chartMinusan']);
+
 Route::middleware('checkLogin')->group(function(){
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -39,6 +44,7 @@ Route::middleware('checkLogin')->group(function(){
     // Minusan
     Route::get('minusan', [MinusanController::class, 'index'])->name('minusan');
 
+    // Middleware isAdmin
     Route::middleware('isAdmin')->group(function(){
         
         // User
@@ -86,7 +92,6 @@ Route::middleware('checkLogin')->group(function(){
         // Minusan PDF
         Route::get('minusan/pdf', [MinusanController::class, 'pdf'])->name('minusanPdf');
     });
-
 });
 
 

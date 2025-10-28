@@ -50,7 +50,7 @@
                                 <td>{{ $item->nomor }}</td>
                                 <td>{{ number_format($item->total, 0, ',', '.') }}</td>
                                 <td>{{ $item->qty }}</td>
-                                <td>{{ number_format($item->total_per_orang * $item->qty, 0, ',', '.') }}</td>
+                                <td>{{ number_format($item->total_per_orang, 0, ',', '.') }}</td> 
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <a href="{{ route('minusanEdit', $item->id) }}" class="btn btn-sm btn-warning">

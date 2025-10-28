@@ -144,37 +144,35 @@
             </div>
 
             <div class="row mb-2">
-                <div class="col-6">
-                    <label class="form-label">
-                        <span class="text-danger">*</span>
-                        Total Per Orang :
-                    </label>
-                    <input type="number" name="total_per_orang" class="form-control @error('total_per_orang') is-invalid @enderror" value="{{ $minusan->total_per_orang }}">
-                    @error('total_per_orang')
-                    <small class="text-danger">
-                        {{ $message }}
-                    </small> 
-                    @enderror
-                </div>
+    <div class="col-6">
+        <label class="form-label">
+            <span class="text-danger">*</span>
+            Total Per Orang :
+        </label>
+        <input type="number" id="total_per_orang" name="total_per_orang" 
+               class="form-control @error('total_per_orang') is-invalid @enderror" 
+               value="{{ $minusan->total_per_orang }}" readonly>
+        @error('total_per_orang')
+        <small class="text-danger">{{ $message }}</small> 
+        @enderror
+    </div>
 
-                <div class="col-6">
-                    <label class="form-label">
-                        <span class="text-danger">*</span>
-                        Keterangan :
-                    </label>
-                    <select name="keterangan" class="form-control @error('keterangan') is-invalid @enderror">
-                        <option disabled {{ old('keterangan', $minusan->keterangan) ? '' : 'selected' }}>Pilih Keterangan</option>
-                        <option value="Dialihkan" {{ old('keterangan', $minusan->keterangan) == 'Dialihkan' ? 'selected' : '' }}>Dialihkan</option>
-                        <option value="Digagalkan" {{ old('keterangan', $minusan->keterangan) == 'Digagalkan' ? 'selected' : '' }}>Digagalkan</option>
-                    </select>
+    <div class="col-6">
+        <label class="form-label">
+            <span class="text-danger">*</span>
+            Keterangan :
+        </label>
+        <select name="keterangan" class="form-control @error('keterangan') is-invalid @enderror">
+            <option disabled {{ old('keterangan', $minusan->keterangan) ? '' : 'selected' }}>Pilih Keterangan</option>
+            <option value="Dialihkan" {{ old('keterangan', $minusan->keterangan) == 'Dialihkan' ? 'selected' : '' }}>Dialihkan</option>
+            <option value="Digagalkan" {{ old('keterangan', $minusan->keterangan) == 'Digagalkan' ? 'selected' : '' }}>Digagalkan</option>
+        </select>
+        @error('keterangan')
+        <small class="text-danger">{{ $message }}</small> 
+        @enderror
+    </div>
+</div>
 
-                    @error('keterangan')
-                    <small class="text-danger">
-                        {{ $message }}
-                    </small> 
-                    @enderror
-                </div>
-            </div>
 
             <div class="form-group mt-3">
                 <button type="submit" class="btn btn-sm btn-primary">
@@ -184,4 +182,24 @@
         </form>
         </div>
     </div>
+
+    {{-- Script hitung otomatis total per orang --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalInput = document.getElementById('total');
+            const qtyInput = document.getElementById('qty');
+            const perOrangInput = document.getElementById('total_per_orang');
+
+            function updatePerOrang() {
+                const total = parseFloat(totalInput.value) || 0;
+                const qty = parseInt(qtyInput.value) || 0;
+                perOrangInput.value = qty > 0 ? (total / qty).toFixed(0) : 0;
+            }
+
+            totalInput.addEventListener('input', updatePerOrang);
+            qtyInput.addEventListener('input', updatePerOrang);
+        });
+    </script>
+
 @endsection
