@@ -38,8 +38,8 @@
                 </li>
 
                  <!-- Nav Item - Rekap Bulanan -->
-                <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
+                <li class="nav-item {{ $menuAdminRekap ?? ''}}">
+                    <a class="nav-link" href="{{ route('admin.rekap.index') }}">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Rekap Bulanan</span></a>
                 </li>

@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Exports\RekapBulananExport;
 
 class MinusanController extends Controller
 {
@@ -168,16 +169,48 @@ class MinusanController extends Controller
     public function chartMinusan()
     {
         $data = DB::table('minusans')
-            ->selectRaw(
-                '
+            ->selectRaw('
             DATE_FORMAT(tanggal, "%Y-%m") as bulan,
             SUM(total) as total_bulanan
-        ',
-            )
+            ')
             ->groupBy('bulan')
             ->orderBy('bulan', 'asc')
             ->get();
 
         return response()->json($data);
+    }
+
+    public function rekapBulanan(Request $request)
+    {
+        $bulan = $request->input('bulan', date('m'));
+        $tahun = $request->input('tahun', date('Y'));
+
+        $tahunList = DB::table('minusans')->selectRaw('YEAR(tanggal) as tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
+
+        if (!$tahunList->contains(date('Y'))) {
+            $tahunList->prepend(date('Y'));
+        }
+
+        $minusan = DB::table('minusans')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+
+        return view('admin.rekap-bulanan.index', [
+            'title' => 'Rekap Bulanan',
+            'menuAdminRekap' => 'active',
+            'minusan' => $minusan,
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'tahunList' => $tahunList,
+        ]);
+    }
+
+    public function rekapBulananPdf($bulan, $tahun) {
+        $minusan = DB::table('minusans')->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+
+        $pdf = PDF::loadView('admin.rekap-bulanan.rekap-pdf', compact('minusan', 'bulan', 'tahun'));
+        return $pdf->stream("Rekap-Bulanan-{$bulan}-{$tahun}.pdf");
+    }
+
+    public function rekapBulananExcel($bulan, $tahun) {
+        return Excel::download(new RekapBulananExport($bulan, $tahun), "Rekap-Bulanan-{$bulan}-{$tahun}.xlsx");
     }
 }

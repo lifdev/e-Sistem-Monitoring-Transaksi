@@ -22,7 +22,7 @@ use App\Http\Controllers\MinusanController;
 // });
 
 // Middleware isLogin
-Route::middleware('isLogin')->group(function(){
+Route::middleware('isLogin')->group(function () {
     // Login
     Route::redirect('/', '/login');
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -32,21 +32,29 @@ Route::middleware('isLogin')->group(function(){
 });
 
 // Logout
-Route::get('logout',[AuthController::class, 'logout'])->name('logout');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 // Route Area Chart
 Route::get('/chart/minusan', [MinusanController::class, 'chartMinusan']);
 
-Route::middleware('checkLogin')->group(function(){
+Route::middleware('checkLogin')->group(function () {
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Minusan
     Route::get('minusan', [MinusanController::class, 'index'])->name('minusan');
 
+    // Rekap Bulanan
+    Route::get('rekap-bulanan', [MinusanController::class, 'rekapBulanan'])->name('admin.rekap.index');
+
+    // Rekap Bulanan PDF
+    Route::get('rekap-bulanan/cetak/{bulan}/{tahun}', [MinusanController::class, 'rekapBulananPdf'])->name('admin.rekap.cetak');
+
+    // Rekap Bulanan Excel
+    Route::get('rekap-bulanan/excel/{bulan}/{tahun}', [MinusanController::class, 'rekapBulananExcel'])->name('admin.rekap.excel');
+
     // Middleware isAdmin
-    Route::middleware('isAdmin')->group(function(){
-        
+    Route::middleware('isAdmin')->group(function () {
         // User
         Route::get('user', [UserController::class, 'index'])->name('user');
 
@@ -61,7 +69,7 @@ Route::middleware('checkLogin')->group(function(){
 
         // User Update
         Route::post('user/update/{id}', [UserController::class, 'update'])->name('userUpdate');
-        
+
         // User Hapus Destroy
         Route::delete('user/destroy/{id}', [UserController::class, 'destroy'])->name('userDestroy');
 
@@ -91,7 +99,11 @@ Route::middleware('checkLogin')->group(function(){
 
         // Minusan PDF
         Route::get('minusan/pdf', [MinusanController::class, 'pdf'])->name('minusanPdf');
+
+        // Rekap Bulanan Excel
+        Route::get('rekap-bulanan/excel', [MinusanController::class, 'rekapExcel'])->name('rekap.excel');
+
+        // Rekap Bulanan PDF
+        Route::get('rekap-bulanan/pdf', [MinusanController::class, 'rekapPdf'])->name('rekap.pdf');
     });
 });
-
-
