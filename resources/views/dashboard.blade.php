@@ -135,8 +135,7 @@
         </div>
     </div>
 
-    <!--Area Chart-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('sbadmin2/js/chart.js') }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fetch("/chart/minusan")
